@@ -389,18 +389,28 @@ class FLog {
     assert(text != null);
     assert(type != null);
 
-    var splitted = Trace.current().frames[2].member!.split(".");
 
-    //check to see if className is not provided
-    //then its already been taken from calling class
-    if (className == null) {
-      className = splitted[0];
-    }
 
-    //check to see if methodName is not provided
-    //then its already been taken from calling class
-    if (methodName == null) {
-      methodName = splitted[1];
+    try {
+      var currentTrace = Trace.current();
+      var frame = currentTrace.frames[2];
+      var member = frame.member!;
+
+      //check to see if className is not provided
+      //then its already been taken from calling class
+      if (className == null) {
+        className = member.split(".")[0];
+      }
+
+      //check to see if methodName is not provided
+      //then its already been taken from calling class
+      if (methodName == null) {
+        methodName = member.split(".")[1];
+      }
+    } on RangeError {
+      // Do nothing, when RangeError occurs
+    } catch (e) {
+      //
     }
 
     // Generate a custom formatted stack trace
