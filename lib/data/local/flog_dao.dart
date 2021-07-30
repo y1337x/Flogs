@@ -79,7 +79,7 @@ class FlogDao {
     final recordSnapshots = await (_flogsStore.find(
       await _db,
       finder: finder,
-    ) as Future<List<RecordSnapshot<int, Map<String, Object>>>>);
+    ));
 
     // Making a List<Log> out of List<RecordSnapshot>
     return recordSnapshots.map((snapshot) {
@@ -94,7 +94,7 @@ class FlogDao {
   Future<List<Log>> getAllLogs() async {
     final recordSnapshots = await (_flogsStore.find(
       await _db,
-    ) as Future<List<RecordSnapshot<int, Map<String, Object>>>>);
+    ));
 
     // Making a List<Log> out of List<RecordSnapshot>
     return recordSnapshots.map((snapshot) {
